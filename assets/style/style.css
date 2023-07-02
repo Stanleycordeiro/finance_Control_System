@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;1,300&display=swap");
+
+* {
+  font-family: "Poppins", sans-serif;
+  color: #676767;
+}
+
+#main {
+  
+  height: 100vh;
+  background-color: #284b66;
+  
+}
+
+/* Loading style */
+.loadingMain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.load-wrapp {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #27272771;
+  z-index: 9999;
+}
+
+.ring-2 {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  border: 4px solid #2a85ca;
+  border-radius: 100%;
+}
+
+.ball-holder {
+  position: absolute;
+  width: 12px;
+  height: 45px;
+  left: 17px;
+}
+
+.ball {
+  position: absolute;
+  top: -11px;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  background: #128be8;
+}
+
+.load-5 .ball-holder {
+  animation: loadingE 1.3s linear infinite;
+}
+
+@keyframes loadingE {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

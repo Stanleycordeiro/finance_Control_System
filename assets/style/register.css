@@ -1,0 +1,27 @@
+
+
+#cardRegister {
+  background-color: #f0f0f0;
+  border-radius: 15px;
+  border: 0.5px solid rgb(86, 86, 86);
+}
+
+#cardRegister h5 {
+  color: #676767;
+}
+
+#btnRegister {
+  width: 100%;
+  background-color: rgb(37, 125, 101);
+  border: none;
+}
+
+#btnLogin {
+    width: 150px;
+    background-color: #42bb70;
+    
+    border: 0.5px solid rgb(208, 208, 208);
+}
+.alert {
+  display: none;
+}
