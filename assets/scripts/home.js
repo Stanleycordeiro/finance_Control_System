@@ -31,3 +31,9 @@ function toggleScreenCash() {
     form.homeScreen().style.display = "none";
     form.enterAndBackScreen().style.display = "block";   
 }
+
+function monitorScreenInit() {
+    form.homeScreen().style.display = "block";
+    form.enterAndBackScreen().style.display = "none";
+}
+monitorScreenInit();
