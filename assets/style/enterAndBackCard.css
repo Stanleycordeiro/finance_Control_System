@@ -1,0 +1,52 @@
+/* #cardbackAndEnterMain {
+    display: none;
+    
+} */
+
+#mainHomeEnterAndBackMoney .card {
+  background-color: aliceblue;
+}
+
+#mainHomeEnterAndBackMoney #cardbackAndEnterMain {
+    background-color: rgb(226, 233, 239);
+    border-radius: 15px;
+}
+
+#mainHomeEnterAndBackMoney .card ol li p {
+  margin: 4px 0;
+}
+
+#mainHomeEnterAndBackMoney .card ol li {
+  margin: 4px 0;
+}
+
+#divLi {
+  cursor: pointer;
+  border-radius: 15px;
+  border: 0.5px solid rgb(171, 170, 170);
+}
+
+#mainHomeEnterAndBackMoney #divLi:hover {
+    background-color: rgba(241, 242, 242, 0.753);
+  }
+
+  #mainHomeEnterAndBackMoney .expense {
+    border-left: 25px solid rgb(153, 44, 44);
+  }
+
+  #mainHomeEnterAndBackMoney .income {
+    border-left: 25px solid rgb(44, 153, 71);
+  }
+
+  #itensNavBar button {
+    padding: 0;
+    margin: 0;
+    border: none;
+   color: rgb(212, 215, 216);
+    background: transparent;
+   
+  }
+
+  #itensNavBar button p {
+   color: rgb(183, 183, 186);
+  }
