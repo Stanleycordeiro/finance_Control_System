@@ -11,21 +11,59 @@
       crossorigin="anonymous"
     />
 
-    <title>Home - System login with JS and Firebase</title>
+    <title>Home - System finance control</title>
   </head>
   <body>
     <div id="main">
-      <div class="container pt-5">
-        <h1 class="text-white">home</h1>
+      <div id="header" class="shadow">
+        <nav class="navbar navbar-dark bg-dark">
+          <div class="container">
+            <a class="navbar-brand">System finance control</a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasDarkNavbar"
+              aria-controls="offcanvasDarkNavbar"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div
+              class="offcanvas offcanvas-end text-bg-dark"
+              tabindex="-1"
+              id="offcanvasDarkNavbar"
+              aria-labelledby="offcanvasDarkNavbarLabel"
+            >
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
+                  MENU
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close btn-close-white"
+                  data-bs-dismiss="offcanvas"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="offcanvas-body">
+                
+                <button
+                  type="button"
+                  class="btn btn-primary mt-5"
+                  id="logoff"
+                  onclick="logout();"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
 
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="logoff"
-          onclick="logout();"
-        >
-          Logout
-        </button>
+      <div class="container p-3">
+        <h1 class="text-white">home</h1>
       </div>
     </div>
 
