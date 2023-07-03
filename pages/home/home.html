@@ -54,7 +54,7 @@
                     <button type="button" class="pb-3" onclick="toggleScreenHome()">Home</button>
                   </li>
                   <li class="nav-item">
-                    <button type="button" class="" onclick="toggleScreenCash()">Entradas e saidas</button>
+                    <button type="button" class="" onclick="toggleScreenCash()">Receitas e despesas</button>
                   </li>
               </div>
               <div
@@ -85,13 +85,13 @@
       <div class="container pt-5 pb-5" id="mainHomeEnterAndBackMoney">
         <div class="card shadow" id="cardbackAndEnterMain">
           <div class="card-body">
-            <h5 class="ps-2">Entradas e saidas</h5>
+            <h5 class="ps-2">Receitas e despesas</h5>
             <div
               class="container p-2"
               id="enterAndBackList"
             >
-              <ol class="list-group list-unstyled">
-                <li>
+              <ol class="list-group list-unstyled" id="transactions">
+                <!-- <li>
                   <div class="card list-group-item shadow-sm expense" id="divLi">
                     <b>02/07/2023</b>
                     <p>R$ 20,00</p>
@@ -125,7 +125,7 @@
                     <p>R$ 20,00</p>
                     <p>Supermercado</p>
                   </div>
-                </li>
+                </li> -->
               </ol>
             </div>
           </div>
