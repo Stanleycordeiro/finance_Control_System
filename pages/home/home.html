@@ -129,8 +129,59 @@
               </ol>
             </div>
           </div>
-          <button class="fab fixed right botton shadow mt-3 ms-3">+</button>
+          <button class="fab fixed right botton shadow mt-3 ms-3" onclick="showAddTransaction();">+</button>
         </div>
+
+        <!-- ADD TRANSACTION -->
+
+        <!-- <div class="card shadow" id="addTransaction">
+          <div class="card-body">
+            <div class="">
+              <h5 class="text-center">Nova transação</h5>
+              <form>
+                <div class="mb-2 d-flex justify-content-center pt-1">
+                  <label  class="form-label" for="income">Receita</label>
+                  <input type="radio" name="type" class="ms-2 mb-1" id="income">
+                  <label  class="form-label ps-4" for="expense" >Despesa</label>
+                  <input type="radio" name="type" class="ms-2 mb-1" id="expense" checked>
+                </div>
+                <div class="mb-2">
+                  <label for="date" class="form-label">Data da transação</label>
+                  <input type="date" class="form-control" id="date">
+                </div>
+                <div class="mb-2">
+                  <label for="value" class="form-label">Valor</label>
+                  <input type="number" class="form-control" id="value">
+                </div>
+                <div class="mb-2">
+                  <label for="typeTransactions" class="form-label">Tipo da transação</label>
+                  <select name="typeTransactions" class="form-control">
+                    <option value="">-- Selecione o tipo de transação--</option>
+                    <option value="">Alimentação</option>
+                    <option value="">Despesas pessoais</option>
+                    <option value="">Gastos com casa</option>
+                    <option value="">Diversão</option>
+                    <option value="">Entreterimento</option>
+                    <option value="">Salario</option>
+                    <option value="">Renda variavel</option>
+                    <option value="">Renda extra</option>
+                    <option value="">Outros</option>
+                  </select>
+                </div>
+                <div class="mb-4 ">
+                  <label for="description" class="form-label">Descrição da transação</label>
+                  <input type="text" class="form-control" id="description">
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button type="button" class="btn btn-success">Adicionar</button>
+                  <button type="button" class="btn btn-danger ms-3">Cancelar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div> -->
+          
+        
        
       </div>
     </div>
@@ -152,5 +203,6 @@
     <script src="../../assets/scripts/home.js"></script>
     <script src="../../assets/scripts/loading.js"></script>
     <script src="../../assets/scripts/authGuard.js"></script>
+    <script src="../../assets/scripts/addTransaction.js"></script>
   </body>
 </html>
