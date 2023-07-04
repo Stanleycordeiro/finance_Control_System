@@ -37,19 +37,37 @@ function monitorScreenInit() {
 }
 monitorScreenInit();
 
-//chamada ao banco
-findTransations();
+//verificando id user para trazer o conteudo do DB
+document.addEventListener("DOMContentLoaded", function () {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      findTransations(user);
+    }
+  });
+});
 
-function findTransations() {
+function findTransations(user) {
+  showLoading();
   firebase
     .firestore()
     .collection("transactions")
+    .where("user.uid", "==", user.uid)
+    .orderBy("date", "desc")
     .get()
     .then((snapshot) => {
+      hideLoading();
       const transactions = snapshot.docs.map((doc) => doc.data());
       addTransactionsScreen(transactions);
+    })
+    .catch((error) => {
+      hideLoading();
+      console.log(error);
+      alert("Erro ao recuperar transações, tente novamente");
     });
 }
+
+//chamada ao banco
+findTransations();
 
 //Printar elemento na tela vindo do banco
 function addTransactionsScreen(transactions) {
