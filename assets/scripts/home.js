@@ -6,6 +6,9 @@ form = {
     document.getElementById("mainHomeEnterAndBackMoney"),
 };
 
+
+
+
 function logout() {
   showLoading();
   firebase
@@ -107,6 +110,9 @@ function formatDate(date) {
 function formatMoney(money) {
   return `${"R$ "} ${money.toFixed(2)}`;
 }
+
+
+
 
 // //banco fake
 // const fakeTransactions = [

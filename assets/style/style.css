@@ -5,10 +5,19 @@
   color: #676767;
 }
 
-#main {
+#main #mainRegisterAndLogin {
+  width: 100%;
   height: 100vh;
+}
+
+#main {
+ 
   background-color: #284b66;
-  background-size: 100%;
+  
+}
+
+#mainHome {
+  height: 100vh;
 }
 
 
