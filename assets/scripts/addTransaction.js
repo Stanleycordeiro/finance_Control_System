@@ -80,11 +80,11 @@ function showAddTransaction() {
                   Tipo de transação é obrigatória
                 </div>
           <div class="mb-4 ">
-            <label for="description" class="form-label">Descrição da transação</label>
+            <label  class="form-label">Descrição da transação</label>
             <input type="text" class="form-control" id="description">
           </div>
           <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-success" id="saveButton" disabled>Adicionar</button>
+            <button type="button" class="btn btn-success" id="saveButton"  disabled>Adicionar</button>
             <button type="button" class="btn btn-danger ms-3" onclick="hideAddTransaction();">Cancelar</button>
           </div>
         </form>
@@ -96,6 +96,8 @@ function showAddTransaction() {
   //resgatrando Elementos
   const form = {
     saveButton: () => document.getElementById("saveButton"),
+    typeExpense: () => document.getElementById("expense"),
+    typeIncome: () => document.getElementById("income"),
 
     date: () => document.getElementById("dateInput"),
     errorDateRequired: () => document.getElementById("errorDateRequire"),
@@ -108,6 +110,8 @@ function showAddTransaction() {
     typeTransactions: () => document.getElementById("typeTransactions"),
     errorTransactionTypeRequire: () =>
       document.getElementById("errorTransactionTypeRequire"),
+
+    descriptionTransaction: () => document.getElementById("description"),
   };
 
   //verificação do campo date
@@ -163,4 +167,39 @@ function showAddTransaction() {
 
     return true;
   }
+
+  //salvando informações no banco
+  form.saveButton().addEventListener("click", saveTransaction);
+  function saveTransaction() {
+    showLoading();
+    const transactions = createTransaction();
+
+    firebase
+      .firestore()
+      .collection("transactions")
+      .add(transactions)
+      .then(() => {
+        hideLoading();
+        hideAddTransaction();
+        window.location.reload();
+      })
+      .catch(() => {
+        hideLoading();
+        alert("Erro ao salvar a nova transação, tente novamente.");
+      });
+  }
+
+  function createTransaction () {
+    return {
+      type: form.typeExpense().checked ? "expense" : "income",
+      date: form.date().value,
+      money: parseFloat(form.value().value),
+      transctionType: form.typeTransactions().value,
+      description: form.descriptionTransaction().value,
+      user: {
+        uid: firebase.auth().currentUser.uid,
+      },
+    }
+  };
+
 }

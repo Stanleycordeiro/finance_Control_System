@@ -8,7 +8,9 @@
 #main {
   height: 100vh;
   background-color: #284b66;
+  background-size: 100%;
 }
+
 
 /* button FAB */
 button.fab {
