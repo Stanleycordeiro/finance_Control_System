@@ -7,9 +7,15 @@
   background-color: aliceblue;
 }
 
+#cardbackAndEnterMain {
+  width: 800px;
+ 
+}
+
 #mainHomeEnterAndBackMoney #cardbackAndEnterMain {
     background-color: rgb(226, 233, 239);
     border-radius: 15px;
+    
 }
 
 #mainHomeEnterAndBackMoney .card ol li p {

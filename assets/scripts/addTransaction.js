@@ -1,19 +1,22 @@
 function hideAddTransaction() {
-    const hideTransaction = document.getElementsByClassName('loadingAddTransaction');
-    if (hideTransaction.length){
-      hideTransaction[0].remove();
-    }
+  const hideTransaction = document.getElementsByClassName(
+    "loadingAddTransaction"
+  );
+  if (hideTransaction.length) {
+    hideTransaction[0].remove();
+  }
 }
 
-function showAddTransaction() {  
-    let divMain = document.getElementById("main");  
-    let screenAddTransaction = document.createElement("div");
-    screenAddTransaction.classList.add(
-      "loadingAddTransaction",
-      "justify-content-center",
-      "d-flex"
-    );
-    screenAddTransaction.innerHTML = ` <div class="card shadow" id="addTransaction">
+function showAddTransaction() {
+  let divMain = document.getElementById("main");
+  let screenAddTransaction = document.createElement("div");
+  screenAddTransaction.classList.add(
+    "loadingAddTransaction",
+    "justify-content-center",
+    "d-flex"
+  );
+
+  screenAddTransaction.innerHTML = ` <div class="card shadow" id="addTransaction">
     <div class="card-body">
       <div class="">
         <h5 class="text-center">Nova transação</h5>
@@ -25,43 +28,139 @@ function showAddTransaction() {
             <input type="radio" name="type" class="ms-2 mb-1" id="expense" checked>
           </div>
           <div class="mb-2">
-            <label for="date" class="form-label">Data da transação</label>
-            <input type="date" class="form-control" id="date">
+            <label  class="form-label">Data da transação *</label>
+            <input type="date" class="form-control" id="dateInput" >
           </div>
+          <div
+                  class="alert alert-danger mt-3 text-center p-1"
+                  id="errorDateRequire"
+                  role="alert"
+                >
+                  Data origatória/invalida
+                </div>
+               
           <div class="mb-2">
-            <label for="value" class="form-label">Valor</label>
+            <label class="form-label">Valor *</label>
             <input type="number" class="form-control" id="value">
           </div>
+          <div
+                  class="alert alert-danger mt-3 text-center p-1"
+                  id="errorValueRequire"
+                  role="alert"
+                >
+                  Valor obrigatório
+                </div>
+                <div
+                  class="alert alert-danger mt-3 text-center p-1"
+                  id="errorValueNegative"
+                  role="alert"
+                >
+                  Valor não pode ser negativo
+                </div>
           <div class="mb-2">
-            <label for="typeTransactions" class="form-label">Tipo da transação</label>
-            <select name="typeTransactions" class="form-control">
+            <label class="form-label">Tipo da transação *</label>
+            <select id="typeTransactions" class="form-control">
               <option value="">-- Selecione o tipo de transação--</option>
-              <option value="">Alimentação</option>
-              <option value="">Despesas pessoais</option>
-              <option value="">Gastos com casa</option>
-              <option value="">Diversão</option>
-              <option value="">Entreterimento</option>
-              <option value="">Salario</option>
-              <option value="">Renda variavel</option>
-              <option value="">Renda extra</option>
-              <option value="">Outros</option>
+              <option>Alimentação</option>
+              <option>Despesas pessoais</option>
+              <option>Gastos com casa</option>
+              <option>Diversão</option>
+              <option>Entreterimento</option>
+              <option>Salario</option>
+              <option>Renda variavel</option>
+              <option>Renda extra</option>
+              <option>Outros</option>
             </select>
           </div>
+          <div
+                  class="alert alert-danger mt-3 text-center p-1"
+                  id="errorTransactionTypeRequire"
+                  role="alert"
+                >
+                  Tipo de transação é obrigatória
+                </div>
           <div class="mb-4 ">
             <label for="description" class="form-label">Descrição da transação</label>
             <input type="text" class="form-control" id="description">
           </div>
           <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-success">Adicionar</button>
+            <button type="button" class="btn btn-success" id="saveButton" disabled>Adicionar</button>
             <button type="button" class="btn btn-danger ms-3" onclick="hideAddTransaction();">Cancelar</button>
           </div>
         </form>
       </div>
     </div>
   </div>`;
-  
-    divMain.appendChild(screenAddTransaction);
 
+  divMain.appendChild(screenAddTransaction);
+  //resgatrando Elementos
+  const form = {
+    saveButton: () => document.getElementById("saveButton"),
+
+    date: () => document.getElementById("dateInput"),
+    errorDateRequired: () => document.getElementById("errorDateRequire"),
+    errorDateValid: () => document.getElementById("errorDateInvalid"),
+
+    value: () => document.getElementById("value"),
+    errorValueRequired: () => document.getElementById("errorValueRequire"),
+    errorValueNegative: () => document.getElementById("errorValueNegative"),
+
+    typeTransactions: () => document.getElementById("typeTransactions"),
+    errorTransactionTypeRequire: () =>
+      document.getElementById("errorTransactionTypeRequire"),
+  };
+
+  //verificação do campo date
+  form.errorDateRequired().style.display = "none";
+  form.date().addEventListener("input", onChangeDate);
+  function onChangeDate() {
+    var date = form.date().value;
+    form.errorDateRequired().style.display = !date ? "block" : "none";
+    onChangeButtonSave();
+  }
+
+  //verificação do campo value
+  form.errorValueRequired().style.display = "none";
+  form.errorValueNegative().style.display = "none";
+  form.value().addEventListener("input", onChangeValue);
+  function onChangeValue() {
+    var value = form.value().value;
+    form.errorValueRequired().style.display = !value ? "block" : "none";
+    form.errorValueNegative().style.display = value <= 0 ? "block" : "none";
+    onChangeButtonSave();
+  }
+
+  //verificação do TIPO DE TRANSAçÂO
+  form.errorTransactionTypeRequire().style.display = "none";
+  form.typeTransactions().addEventListener("input", onChangeType);
+  function onChangeType() {
+    var typeTransactions = form.typeTransactions().value;
+    form.errorTransactionTypeRequire().style.display = !typeTransactions
+      ? "block"
+      : "none";
+    onChangeButtonSave();
+  }
+
+  function onChangeButtonSave() {
+    form.saveButton().disabled = !isFormValid();
+  }
+
+  function isFormValid() {
+    var date = form.date().value;
+    if (!date) {
+      return false;
     }
-  
-  
+
+    var value = form.value().value;
+    if (!value || value <= 0) {
+      return false;
+    }
+
+    var transctionType = form.typeTransactions().value;
+    if (!transctionType) {
+      return false;
+    }
+
+    return true;
+  }
+}
