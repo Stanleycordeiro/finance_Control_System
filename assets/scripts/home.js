@@ -6,9 +6,7 @@ form = {
     document.getElementById("mainHomeEnterAndBackMoney"),
 };
 
-
-
-
+//Função para deslogar
 function logout() {
   showLoading();
   firebase
@@ -59,7 +57,10 @@ function findTransations(user) {
     .get()
     .then((snapshot) => {
       hideLoading();
-      const transactions = snapshot.docs.map((doc) => doc.data());
+      const transactions = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+        uid: doc.id,
+      }));
       addTransactionsScreen(transactions);
     })
     .catch((error) => {
@@ -83,6 +84,58 @@ function addTransactionsScreen(transactions) {
     const pValue = document.createElement("p");
     const pTransctionType = document.createElement("p");
     const pDescription = document.createElement("p");
+
+    li.addEventListener("click", () => {
+      showLoading();
+      showAddTransaction();
+      getTransactionUid();
+    });
+
+    //resgatando transação clicada
+    function getTransactionUid() {
+      var uid = transactions.uid;
+
+      firebase
+        .firestore()
+        .collection("transactions")
+        .doc(uid)
+        .get()
+        .then((doc) => {
+          hideLoading();
+          fillTransactionScreen(doc.data());
+          
+        })
+        .catch(() => {
+          hideLoading();
+          alert("Erro ao carregar sua transação, tente novamente");
+        });
+    }
+
+    function fillTransactionScreen(transactions) {
+      form = {
+        typeExpense: () => document.getElementById("expense"),
+        typeIncome: () => document.getElementById("income"),
+        date: () => document.getElementById("dateInput"),
+        value: () => document.getElementById("value"),
+        typeTransactions: () => document.getElementById("typeTransactions"),
+        descriptionTransaction: () => document.getElementById("description"),
+        saveButton: () => document.getElementById("saveButton"),
+      };
+
+      if (transactions.type == "expense") {
+        form.typeExpense().checked = true;
+      } else {
+        form.typeIncome().checked = true;
+      }
+
+      form.date().value = transactions.date;
+      form.value().value = transactions.money;
+      form.typeTransactions().value = transactions.transctionType;
+
+      if (transactions.description) {
+        form.descriptionTransaction().value = transactions.description;
+      }
+    }
 
     div.setAttribute("id", "divLi");
     div.classList.add("card", "list-group-item", "shadow-sm", "expense");
@@ -110,9 +163,6 @@ function formatDate(date) {
 function formatMoney(money) {
   return `${"R$ "} ${money.toFixed(2)}`;
 }
-
-
-
 
 // //banco fake
 // const fakeTransactions = [
