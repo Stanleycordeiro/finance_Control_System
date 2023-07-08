@@ -8,7 +8,12 @@ function hideAddTransactionModify() {
   }
 }
 
-function showAddTransactionModify() {
+let currentTransaction = null;
+let currentUid = null;
+
+function showAddTransactionModify(uid, transaction) {
+  currentTransaction = transaction;
+  currentUid = uid;
   let divMain = document.getElementById("main");
   let screenAddTransaction = document.createElement("div");
   screenAddTransaction.classList.add(
@@ -169,84 +174,40 @@ function showAddTransactionModify() {
     return true;
   }
 
-  //salvando informações no banco
-  form.saveButton().addEventListener("click", saveTransaction);
-  function saveTransaction() {
-    showLoading();
-    const transactions = createTransaction();
-
-    firebase
-      .firestore()
-      .collection("transactions")
-      .add(transactions)
-      .then(() => {
-        hideLoading();
-        hideAddTransaction();
-        window.location.reload();
-      })
-      .catch(() => {
-        hideLoading();
-        alert("Erro ao salvar a nova transação, tente novamente.");
-      });
-  }
-
   function createTransaction() {
     return {
       type: form.typeExpense().checked ? "expense" : "income",
       date: form.date().value,
       money: parseFloat(form.value().value),
-      transctionType: form.typeTransactions().value,
+      transactionType: form.typeTransactions().value,
       description: form.descriptionTransaction().value,
       user: {
         uid: firebase.auth().currentUser.uid,
       },
     };
   }
-}
 
-//resgatando transação clicada
-function getTransactionUid(transactions) {
-  var uid = transactions.uid;
-  showLoading();
-  firebase
-    .firestore()
-    .collection("transactions")
-    .doc(uid)
-    .get()
-    .then((doc) => {
-      hideLoading();
-      fillTransactionScreen(doc.data());
-    })
-    .catch(() => {
-      hideLoading();
-      alert("Erro ao carregar sua transação, tente novamente");
-    });
-}
-function fillTransactionScreen(transactions) {
-  form = {
-    typeExpense: () => document.getElementById("expense"),
-    typeIncome: () => document.getElementById("income"),
-    date: () => document.getElementById("dateInput"),
-    value: () => document.getElementById("value"),
-    typeTransactions: () => document.getElementById("typeTransactions"),
-    descriptionTransaction: () => document.getElementById("description"),
-    saveButton: () => document.getElementById("saveButton"),
-  };
-
-  if (transactions.type == "expense") {
-    form.typeExpense().checked = true;
-  } else {
-    form.typeIncome().checked = true;
-  }
-
-
-  
-  form.date().value = transactions.date;
-
-  form.value().value = transactions.money;
-  form.typeTransactions().value = transactions.transctionType;
-
-  if (transactions.description) {
-    form.descriptionTransaction().value = transactions.description;
+  //salvando informações no banco
+  form.saveButton().addEventListener("click", saveTransaction);
+  function saveTransaction() {
+    if (currentTransaction && currentUid) {
+      var transaction = createTransaction();
+      firebase
+        .firestore()
+        .collection("transactions")
+        .doc(currentUid) 
+        .update(transaction)
+        .then(() => {
+          hideLoading();
+          hideAddTransactionModify();
+          window.location.reload();
+        })
+        .catch(() => {
+          hideLoading();
+          alert("Erro ao atualizar a transação, tente novamente.");
+        });
+    } else {
+      alert("Transação não encontrada");
+    }
   }
 }

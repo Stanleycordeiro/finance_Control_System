@@ -70,49 +70,38 @@ function findTransations(user) {
     });
 }
 
-//chamada ao banco
-findTransations();
-
-
-
-
-
-
-
-
 //Printar elemento na tela vindo do banco
 function addTransactionsScreen(transactions) {
   const orderedList = document.getElementById("transactions");
 
-  transactions.forEach((transactions) => {
+  transactions.forEach((transaction) => {
     const li = document.createElement("li");
     const div = document.createElement("div");
     const b = document.createElement("b");
     const pValue = document.createElement("p");
-    const pTransctionType = document.createElement("p");
+    const pTransactionType = document.createElement("p");
     const pDescription = document.createElement("p");
 
     li.addEventListener("click", () => {
-      showAddTransactionModify();
-      getTransactionUid(transactions);
+      showAddTransactionModify(transaction.uid, transaction);
+      getTransactionUid(transaction.uid);
+     
     });
-    
-    
 
     div.setAttribute("id", "divLi");
     div.classList.add("card", "list-group-item", "shadow-sm", "expense");
-    div.classList.add(transactions.type);
-    b.innerHTML = formatDate(transactions.date);
-    pValue.innerHTML = formatMoney(transactions.money);
-    pTransctionType.innerHTML = transactions.transctionType;
+    div.classList.add(transaction.type);
+    b.innerHTML = formatDate(transaction.date);
+    pValue.innerHTML = formatMoney(transaction.money);
+    pTransactionType.innerHTML = transaction.transctionType;
 
     orderedList.appendChild(li);
     li.appendChild(div);
     div.appendChild(b);
     div.appendChild(pValue);
-    div.appendChild(pTransctionType);
-    if (transactions.description) {
-      pDescription.innerHTML = transactions.description;
+    div.appendChild(pTransactionType);
+    if (transaction.description) {
+      pDescription.innerHTML = transaction.description;
       div.appendChild(pDescription);
     }
   });
@@ -126,6 +115,47 @@ function formatMoney(money) {
   return `${"R$ "} ${money.toFixed(2)}`;
 }
 
+//resgatando transação clicada
+function getTransactionUid(uid) {
+  showLoading();
+  
+  firebase
+    .firestore()
+    .collection("transactions")
+    .doc(uid)
+    .get()
+    .then((doc) => {
+     
+      hideLoading();
+      fillTransactionScreen(doc.data());
+    })
+    .catch(() => {
+      hideLoading();
+      alert("Erro ao carregar sua transação, tente novamente");
+    });
+    return uid;
+}
+
+let uid;
+
+function fillTransactionScreen(transaction) {
+  modifyForm = {
+    typeExpense: () => document.getElementById("expense"),
+    typeIncome: () => document.getElementById("income"),
+    date: () => document.getElementById("dateInput"),
+    value: () => document.getElementById("value"),
+    typeTransactions: () => document.getElementById("typeTransactions"),
+    descriptionTransaction: () => document.getElementById("description"),
+    saveButton: () => document.getElementById("saveButton"),
+  };
+
+  modifyForm.typeExpense().checked = transaction.type === "expense";
+  modifyForm.typeIncome().checked = transaction.type === "income";
+  modifyForm.date().value = transaction.date;
+  modifyForm.value().value = transaction.money;
+  modifyForm.typeTransactions().value = transaction.transctionType;
+  modifyForm.descriptionTransaction().value = transaction.description;
+}
 // //banco fake
 // const fakeTransactions = [
 //   {
