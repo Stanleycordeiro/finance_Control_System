@@ -73,6 +73,13 @@ function findTransations(user) {
 //chamada ao banco
 findTransations();
 
+
+
+
+
+
+
+
 //Printar elemento na tela vindo do banco
 function addTransactionsScreen(transactions) {
   const orderedList = document.getElementById("transactions");
@@ -86,56 +93,11 @@ function addTransactionsScreen(transactions) {
     const pDescription = document.createElement("p");
 
     li.addEventListener("click", () => {
-      showLoading();
-      showAddTransaction();
-      getTransactionUid();
+      showAddTransactionModify();
+      getTransactionUid(transactions);
     });
-
-    //resgatando transação clicada
-    function getTransactionUid() {
-      var uid = transactions.uid;
-
-      firebase
-        .firestore()
-        .collection("transactions")
-        .doc(uid)
-        .get()
-        .then((doc) => {
-          hideLoading();
-          fillTransactionScreen(doc.data());
-          
-        })
-        .catch(() => {
-          hideLoading();
-          alert("Erro ao carregar sua transação, tente novamente");
-        });
-    }
-
-    function fillTransactionScreen(transactions) {
-      form = {
-        typeExpense: () => document.getElementById("expense"),
-        typeIncome: () => document.getElementById("income"),
-        date: () => document.getElementById("dateInput"),
-        value: () => document.getElementById("value"),
-        typeTransactions: () => document.getElementById("typeTransactions"),
-        descriptionTransaction: () => document.getElementById("description"),
-        saveButton: () => document.getElementById("saveButton"),
-      };
-
-      if (transactions.type == "expense") {
-        form.typeExpense().checked = true;
-      } else {
-        form.typeIncome().checked = true;
-      }
-
-      form.date().value = transactions.date;
-      form.value().value = transactions.money;
-      form.typeTransactions().value = transactions.transctionType;
-
-      if (transactions.description) {
-        form.descriptionTransaction().value = transactions.description;
-      }
-    }
+    
+    
 
     div.setAttribute("id", "divLi");
     div.classList.add("card", "list-group-item", "shadow-sm", "expense");
