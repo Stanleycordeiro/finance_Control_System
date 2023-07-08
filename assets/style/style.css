@@ -3,21 +3,29 @@
 * {
   font-family: "Poppins", sans-serif;
   color: #676767;
+ 
 }
 
-#main #mainRegisterAndLogin {
+
+/* #main #mainRegisterAndLogin {
   width: 100%;
-  height: 100vh;
-}
+  height: 100%;
+} */
 
 #main {
- 
   background-color: #284b66;
-  
+  min-height: 100vh;
+ 
+}
+
+#mainRegister {
+  background-color: #284b66;
+  height: 100vh;
+
 }
 
 #mainHome {
-  height: 100vh;
+  background-color: transparent;
 }
 
 
