@@ -9,7 +9,8 @@ form = {
 //Função para deslogar
 function logout() {
   showLoading();
-    transactionService.logout()
+  transactionService
+    .logout()
     .then(() => {
       hideLoading();
       window.location.href = "../../index.html";
@@ -61,42 +62,13 @@ function addTransactionsScreen(transactions) {
   const orderedList = document.getElementById("transactions");
 
   transactions.forEach((transaction) => {
-    const li = document.createElement("li");
-    const div = document.createElement("div");
-    const b = document.createElement("b");
-    const pValue = document.createElement("p");
-    const pTransactionType = document.createElement("p");
-    const pDescription = document.createElement("p");
-    const buttonRemove = document.createElement("button");
-
-    li.addEventListener("click", () => {
-      showAddTransactionModify(transaction.uid, transaction);
-      getTransactionUid(transaction.uid);
-    });
-
-    buttonRemove.addEventListener("click", (event) => {
-      event.stopPropagation();
-
-      buttonRemoveTransaction(transaction);
-    });
-
-    div.setAttribute("id", "divLi");
-    div.classList.add(
-      "card",
-      "list-group-item",
-      "shadow-sm",
-      "expense",
-      "d-flex",
-      "justify-content-between"
-    );
-    li.id = transaction.uid;
-    buttonRemove.classList.add("btn", "btn-danger", "ms-auto");
-    buttonRemove.setAttribute("id", "buttonRemoveTransaction");
-    buttonRemove.innerHTML = "Remover";
-    div.classList.add(transaction.type);
-    b.innerHTML = formatDate(transaction.date);
-    pValue.innerHTML = formatMoney(transaction.money);
-    pTransactionType.innerHTML = transaction.transctionType;
+    const li = createTransactionListItem(transaction);
+    const div = createDivTransactionListItem(transaction);
+    const b = createBTransactionListItem(transaction);
+    const pValue = createPValueTransactionListItem(transaction);
+    const pTransactionType = createPTransactionTypeListItem(transaction);
+    const pDescription = createPDescriptionListItem(transaction);
+    const buttonRemove = createButtonRemoveListItem(transaction);
 
     orderedList.appendChild(li);
     li.appendChild(div);
@@ -104,11 +76,66 @@ function addTransactionsScreen(transactions) {
     div.appendChild(pValue);
     div.appendChild(pTransactionType);
     if (transaction.description) {
-      pDescription.innerHTML = transaction.description;
       div.appendChild(pDescription);
     }
     div.appendChild(buttonRemove);
   });
+};
+
+//elementos tela ListItens
+function createTransactionListItem(transaction) {
+  const li = document.createElement("li");
+  li.addEventListener("click", () => {
+    showAddTransactionModify(transaction.uid, transaction);
+    getTransactionUid(transaction.uid);
+  });
+  li.id = transaction.uid;
+  return li;
+}
+function createDivTransactionListItem(transaction) {
+  const div = document.createElement("div");
+  div.setAttribute("id", "divLi");
+  div.classList.add(
+    "card",
+    "list-group-item",
+    "shadow-sm",
+    "expense",
+    "d-flex",
+    "justify-content-between"
+  );
+  div.classList.add(transaction.type);
+  return div;
+}
+function createBTransactionListItem(transaction) {
+  const b = document.createElement("b");
+  b.innerHTML = formatDate(transaction.date);
+  return b;
+}
+function createPValueTransactionListItem(transaction) {
+  const pValue = document.createElement("p");
+  pValue.innerHTML = formatMoney(transaction.money);
+  return pValue;
+}
+function createPTransactionTypeListItem(transaction) {
+  const pTransactionType = document.createElement("p");
+  pTransactionType.innerHTML = transaction.transctionType;
+  return pTransactionType;
+}
+function createPDescriptionListItem(transaction) {
+  const pDescription = document.createElement("p");
+  pDescription.innerHTML = transaction.description;
+  return pDescription;
+}
+function createButtonRemoveListItem(transaction) {
+  const buttonRemove = document.createElement("button");
+  buttonRemove.addEventListener("click", (event) => {
+    event.stopPropagation();
+    buttonRemoveTransaction(transaction);
+  });
+  buttonRemove.classList.add("btn", "btn-danger", "ms-auto");
+  buttonRemove.setAttribute("id", "buttonRemoveTransaction");
+  buttonRemove.innerHTML = "Remover";
+  return buttonRemove;
 }
 
 //função para remover transação
@@ -174,23 +201,6 @@ function fillTransactionScreen(transaction) {
   modifyForm.typeTransactions().value = transaction.transctionType;
   modifyForm.descriptionTransaction().value = transaction.description;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // //banco fake
 // const fakeTransactions = [

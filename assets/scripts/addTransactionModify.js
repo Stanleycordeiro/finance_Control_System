@@ -98,6 +98,8 @@ function showAddTransactionModify(uid, transaction) {
   </div>`;
 
   divMain.appendChild(screenAddTransaction);
+  
+
   //resgatrando Elementos
   const form = {
     saveButton: () => document.getElementById("saveButton"),
