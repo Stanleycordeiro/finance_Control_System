@@ -81,6 +81,7 @@ function addTransactionsScreen(transactions) {
     const pValue = document.createElement("p");
     const pTransactionType = document.createElement("p");
     const pDescription = document.createElement("p");
+    const buttonRemove = document.createElement("button");
 
     li.addEventListener("click", () => {
       showAddTransactionModify(transaction.uid, transaction);
@@ -88,7 +89,17 @@ function addTransactionsScreen(transactions) {
     });
 
     div.setAttribute("id", "divLi");
-    div.classList.add("card", "list-group-item", "shadow-sm", "expense");
+    div.classList.add(
+      "card",
+      "list-group-item",
+      "shadow-sm",
+      "expense",
+      "d-flex",
+      "justify-content-between"
+    );
+    buttonRemove.classList.add("btn", "btn-danger", "ms-auto");
+    buttonRemove.setAttribute("id", "buttonRemoveTransaction");
+    buttonRemove.innerHTML = "Remover";
     div.classList.add(transaction.type);
     b.innerHTML = formatDate(transaction.date);
     pValue.innerHTML = formatMoney(transaction.money);
@@ -103,6 +114,7 @@ function addTransactionsScreen(transactions) {
       pDescription.innerHTML = transaction.description;
       div.appendChild(pDescription);
     }
+    div.appendChild(buttonRemove);
   });
 }
 

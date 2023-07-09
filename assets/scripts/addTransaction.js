@@ -93,6 +93,7 @@ function showAddTransaction() {
   </div>`;
 
   divMain.appendChild(screenAddTransaction);
+  
   //resgatrando Elementos
   const form = {
     saveButton: () => document.getElementById("saveButton"),
@@ -114,9 +115,12 @@ function showAddTransaction() {
     descriptionTransaction: () => document.getElementById("description"),
   };
 
+
+
   //verificação do campo date
   form.errorDateRequired().style.display = "none";
   form.date().addEventListener("input", onChangeDate);
+
   function onChangeDate() {
     var date = form.date().value;
     form.errorDateRequired().style.display = !date ? "block" : "none";
@@ -127,6 +131,7 @@ function showAddTransaction() {
   form.errorValueRequired().style.display = "none";
   form.errorValueNegative().style.display = "none";
   form.value().addEventListener("input", onChangeValue);
+
   function onChangeValue() {
     var value = form.value().value;
     form.errorValueRequired().style.display = !value ? "block" : "none";
@@ -189,7 +194,7 @@ function showAddTransaction() {
       });
   }
 
-  function createTransaction () {
+  function createTransaction() {
     return {
       type: form.typeExpense().checked ? "expense" : "income",
       date: form.date().value,
@@ -199,7 +204,6 @@ function showAddTransaction() {
       user: {
         uid: firebase.auth().currentUser.uid,
       },
-    }
-  };
-
+    };
+  }
 }

@@ -56,3 +56,23 @@
   #itensNavBar button p {
    color: rgb(183, 183, 186);
   }
+
+  #buttonRemoveTransaction {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-15%, 25%);
+    background-color: transparent;
+    color: rgb(168, 36, 36);
+    display: none;
+  }
+
+  #buttonRemoveTransaction:hover {
+ 
+    background-color: rgba(232, 193, 193, 0.48);
+   
+  }
+
+  #mainHomeEnterAndBackMoney #divLi:hover #buttonRemoveTransaction {
+    display: block;
+  }
