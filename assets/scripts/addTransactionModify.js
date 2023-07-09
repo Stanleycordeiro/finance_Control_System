@@ -190,6 +190,7 @@ function showAddTransactionModify(uid, transaction) {
   //salvando informações no banco
   form.saveButton().addEventListener("click", saveTransaction);
   function saveTransaction() {
+    showLoading();
     if (currentTransaction && currentUid) {
       var transaction = createTransaction();
       firebase

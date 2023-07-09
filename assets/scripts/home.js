@@ -88,6 +88,12 @@ function addTransactionsScreen(transactions) {
       getTransactionUid(transaction.uid);
     });
 
+    buttonRemove.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      buttonRemoveTransaction(transaction);
+    });
+
     div.setAttribute("id", "divLi");
     div.classList.add(
       "card",
@@ -97,6 +103,7 @@ function addTransactionsScreen(transactions) {
       "d-flex",
       "justify-content-between"
     );
+    li.id = transaction.uid;
     buttonRemove.classList.add("btn", "btn-danger", "ms-auto");
     buttonRemove.setAttribute("id", "buttonRemoveTransaction");
     buttonRemove.innerHTML = "Remover";
@@ -116,6 +123,25 @@ function addTransactionsScreen(transactions) {
     }
     div.appendChild(buttonRemove);
   });
+}
+
+//função para remover transação
+function buttonRemoveTransaction(transaction) {
+  showLoading();
+  firebase
+    .firestore()
+    .collection("transactions")
+    .doc(transaction.uid)
+    .delete()
+    .then(() => {
+      hideLoading();
+      document.getElementById(transaction.uid).remove();
+    })
+    .catch((error) => {
+      hideLoading();
+      console.log(error);
+      alert("Erro ao excluir transação");
+    });
 }
 
 //função para formatação dos campos do li
