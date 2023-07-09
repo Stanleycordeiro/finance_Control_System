@@ -85,7 +85,6 @@ function addTransactionsScreen(transactions) {
     li.addEventListener("click", () => {
       showAddTransactionModify(transaction.uid, transaction);
       getTransactionUid(transaction.uid);
-     
     });
 
     div.setAttribute("id", "divLi");
@@ -109,7 +108,9 @@ function addTransactionsScreen(transactions) {
 
 //função para formatação dos campos do li
 function formatDate(date) {
-  return new Date(date).toLocaleDateString("pt-br");
+  const formattedDate = new Date(date);
+  formattedDate.setDate(formattedDate.getDate() + 1);
+  return formattedDate.toLocaleDateString("pt-br");
 }
 function formatMoney(money) {
   return `${"R$ "} ${money.toFixed(2)}`;
@@ -118,14 +119,13 @@ function formatMoney(money) {
 //resgatando transação clicada
 function getTransactionUid(uid) {
   showLoading();
-  
+
   firebase
     .firestore()
     .collection("transactions")
     .doc(uid)
     .get()
     .then((doc) => {
-     
       hideLoading();
       fillTransactionScreen(doc.data());
     })
@@ -133,7 +133,7 @@ function getTransactionUid(uid) {
       hideLoading();
       alert("Erro ao carregar sua transação, tente novamente");
     });
-    return uid;
+  return uid;
 }
 
 let uid;
