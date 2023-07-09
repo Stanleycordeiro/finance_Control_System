@@ -9,9 +9,7 @@ form = {
 //Função para deslogar
 function logout() {
   showLoading();
-  firebase
-    .auth()
-    .signOut()
+    transactionService.logout()
     .then(() => {
       hideLoading();
       window.location.href = "../../index.html";
@@ -40,27 +38,15 @@ monitorScreenInit();
 
 //verificando id user para trazer o conteudo do DB
 document.addEventListener("DOMContentLoaded", function () {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      findTransations(user);
-    }
-  });
+  transactionService.getContentUser();
 });
 
 function findTransations(user) {
   showLoading();
-  firebase
-    .firestore()
-    .collection("transactions")
-    .where("user.uid", "==", user.uid)
-    .orderBy("date", "desc")
-    .get()
-    .then((snapshot) => {
+  transactionService
+    .findByUser(user)
+    .then((transactions) => {
       hideLoading();
-      const transactions = snapshot.docs.map((doc) => ({
-        ...doc.data(),
-        uid: doc.id,
-      }));
       addTransactionsScreen(transactions);
     })
     .catch((error) => {
@@ -128,11 +114,8 @@ function addTransactionsScreen(transactions) {
 //função para remover transação
 function buttonRemoveTransaction(transaction) {
   showLoading();
-  firebase
-    .firestore()
-    .collection("transactions")
-    .doc(transaction.uid)
-    .delete()
+  transactionService
+    .remove(transaction)
     .then(() => {
       hideLoading();
       document.getElementById(transaction.uid).remove();
@@ -158,11 +141,8 @@ function formatMoney(money) {
 function getTransactionUid(uid) {
   showLoading();
 
-  firebase
-    .firestore()
-    .collection("transactions")
-    .doc(uid)
-    .get()
+  transactionService
+    .getTransaction(uid)
     .then((doc) => {
       hideLoading();
       fillTransactionScreen(doc.data());
@@ -194,6 +174,24 @@ function fillTransactionScreen(transaction) {
   modifyForm.typeTransactions().value = transaction.transctionType;
   modifyForm.descriptionTransaction().value = transaction.description;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // //banco fake
 // const fakeTransactions = [
 //   {

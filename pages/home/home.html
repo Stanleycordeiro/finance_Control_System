@@ -1,96 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../assets/style/style.css" />
-    <link rel="stylesheet" href="../../assets/style/home.css">
-    <link rel="stylesheet" href="../../assets/style/enterAndBackCard.css">
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-      crossorigin="anonymous"
-    />
 
-    <title>Home - System finance control</title>
-  </head>
-  <body>
-    <div id="main" class="" >
-      <div id="header" class="shadow">
-        <nav class="navbar navbar-dark bg-dark">
-          <div class="container">
-            <a class="navbar-brand">System finance control</a>
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasDarkNavbar"
-              aria-controls="offcanvasDarkNavbar"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div
-              class="offcanvas offcanvas-end text-bg-dark"
-              tabindex="-1"
-              id="offcanvasDarkNavbar"
-              aria-labelledby="offcanvasDarkNavbarLabel"
-            >
-              <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
-                  MENU
-                </h5>
-                <button
-                  type="button"
-                  class="btn-close btn-close-white"
-                  data-bs-dismiss="offcanvas"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="offcanvas-body container " id="itensNavBar">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                  <li class="nav-item">
-                    <button type="button" class="pb-3" onclick="toggleScreenHome()">Home</button>
-                  </li>
-                  <li class="nav-item">
-                    <button type="button" class="" onclick="toggleScreenCash()">Receitas e despesas</button>
-                  </li>
-              </div>
-              <div
-                class="container d-flex justify-content-end align-items-center p-5 pb-4"
-              >
-                <button
-                  type="button"
-                  class="btn btn-danger mt-5"
-                  id="logoff"
-                  onclick="logout();"
-                >
-                  Logout
-                </button>
-              </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../assets/style/style.css" />
+  <link rel="stylesheet" href="../../assets/style/home.css">
+  <link rel="stylesheet" href="../../assets/style/enterAndBackCard.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+
+  <title>Home - System finance control</title>
+</head>
+
+<body>
+  <div id="main" class="">
+    <div id="header" class="shadow">
+      <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand">System finance control</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
+            aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+            aria-labelledby="offcanvasDarkNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
+                MENU
+              </h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body container " id="itensNavBar">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <button type="button" class="pb-3" onclick="toggleScreenHome()">Home</button>
+                </li>
+                <li class="nav-item">
+                  <button type="button" class="" onclick="toggleScreenCash()">Receitas e despesas</button>
+                </li>
+            </div>
+            <div class="container d-flex justify-content-end align-items-center p-5 pb-4">
+              <button type="button" class="btn btn-danger mt-5" id="logoff" onclick="logout();">
+                Logout
+              </button>
             </div>
           </div>
-        </nav>
-      </div>
-
-      <!-- DIV HOME -->
-      <div class="mainHome container-fluid" id="mainHome">
-        <div class="container p-3">
-          <h1 class="text-white mt-3">HOME</h1>
         </div>
-      </div>
+      </nav>
+    </div>
 
-      <!-- DIV DE ENTRADAS E SAIDAS -->
-      <div class="container pt-5 pb-5" id="mainHomeEnterAndBackMoney">
-        <div class="d-flex justify-content-center">
+    <!-- DIV HOME -->
+    <div class="mainHome container-fluid" id="mainHome">
+      <div class="container p-3">
+        <h1 class="text-white mt-3">HOME</h1>
+      </div>
+    </div>
+
+    <!-- DIV DE ENTRADAS E SAIDAS -->
+    <div class="container pt-5 pb-5" id="mainHomeEnterAndBackMoney">
+      <div class="d-flex justify-content-center">
         <div class="card shadow" id="cardbackAndEnterMain">
           <div class="card-body">
             <h5 class="ps-2">Receitas e despesas</h5>
-            <div
-              class="container p-2"
-              id="enterAndBackList"
-            >
+            <div class="container p-2" id="enterAndBackList">
               <ol class="list-group list-unstyled" id="transactions">
                 <!--  <li>
                   <div class="card list-group-item shadow-sm expense" id="divLi">
@@ -182,37 +156,34 @@
             </div>
           </div>
         </div> -->
-          
-        
-       
+
+
+
       </div>
     </div>
-    </div>
+  </div>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
-      integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    <script src="../../assets/scripts/firebase_init.js"></script>
-    <script src="../../assets/scripts/home.js"></script>
-    <script src="../../assets/scripts/addTransaction.js"></script>
-    <script src="../../assets/scripts/loading.js"></script>
-    <script src="../../assets/scripts/authGuard.js"></script>
-    <script src="../../assets/scripts/addTransactionModify.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
-    
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+    integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+    crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="../../assets/scripts/firebase_init.js"></script>
+  <script src="../../assets/scripts/home.js"></script>
+  <script src="../../assets/scripts/addTransaction.js"></script>
+  <script src="../../assets/scripts/loading.js"></script>
+  <script src="../../assets/scripts/authGuard.js"></script>
+  <script src="../../assets/scripts/addTransactionModify.js"></script>
+  <script src="../../services/transaction.services.js"></script>
 
-    
-    
-  </body>
+
+
+
+
+</body>
+
 </html>

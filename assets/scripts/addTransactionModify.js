@@ -4,7 +4,6 @@ function hideAddTransactionModify() {
   );
   if (hideTransaction.length) {
     hideTransaction[0].remove();
-    window.location.reload();
   }
 }
 
@@ -187,17 +186,13 @@ function showAddTransactionModify(uid, transaction) {
     };
   }
 
-  //salvando informações no banco
+  //salvando edição no banco
   form.saveButton().addEventListener("click", saveTransaction);
   function saveTransaction() {
     showLoading();
     if (currentTransaction && currentUid) {
       var transaction = createTransaction();
-      firebase
-        .firestore()
-        .collection("transactions")
-        .doc(currentUid) 
-        .update(transaction)
+        transactionService.saveTransactionModify(transaction, currentUid)
         .then(() => {
           hideLoading();
           hideAddTransactionModify();

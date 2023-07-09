@@ -93,7 +93,7 @@ function showAddTransaction() {
   </div>`;
 
   divMain.appendChild(screenAddTransaction);
-  
+
   //resgatrando Elementos
   const form = {
     saveButton: () => document.getElementById("saveButton"),
@@ -114,8 +114,6 @@ function showAddTransaction() {
 
     descriptionTransaction: () => document.getElementById("description"),
   };
-
-
 
   //verificação do campo date
   form.errorDateRequired().style.display = "none";
@@ -179,10 +177,8 @@ function showAddTransaction() {
     showLoading();
     const transactions = createTransaction();
 
-    firebase
-      .firestore()
-      .collection("transactions")
-      .add(transactions)
+    transactionService
+      .saveTransaction(transactions)
       .then(() => {
         hideLoading();
         hideAddTransaction();
