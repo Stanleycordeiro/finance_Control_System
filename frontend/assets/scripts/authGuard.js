@@ -3,4 +3,7 @@ firebase.auth().onAuthStateChanged((user) => {
       showLoading();
       window.location.href = "../../index.html";
     } 
+    if(user){
+      user.getIdToken().then(token => console.log(token));
+    }
   });
