@@ -1,6 +1,12 @@
-import admin from "firebase-admin";
+import { TransactionRepository } from "./repository.js";
 
 export class Transactions {
+  #repository;
+
+  constructor() {
+    this.#repository = new TransactionRepository();
+  }
+
   findByUser() {
     if (!this.user?.uid) {
       return Promise.reject({
@@ -8,18 +14,6 @@ export class Transactions {
         message: "Usuário não encontrado",
       });
     }
-
-    return admin
-      .firestore()
-      .collection("transactions")
-      .where("user.uid", "==", this.user.uid)
-      .orderBy("date", "desc")
-      .get()
-      .then((snapshot) => {
-        return snapshot.docs.map((doc) => ({
-          ...doc.data(),
-          uid: doc.id,
-        }));
-      });
+    return this.#repository.findByUserUid(this.user.uid);
   }
 }
