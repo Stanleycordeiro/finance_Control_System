@@ -1,19 +1,17 @@
-import admin from "firebase-admin";
+import { Transactions } from "./model.js";
 
 export class TransactionController {
-    findByUser(request, response) {
-        admin
-            .firestore()
-            .collection('transactions')
-            .where('user.uid', '==', request.user.uid)
-            .orderBy('date', 'desc')
-            .get()
-            .then((snapshot) => {
-                const transactions = snapshot.docs.map((doc) => ({
-                    ...doc.data(),
-                    uid: doc.id,
-                }));
-                response.json(transactions);
-            });
-    }
+  findByUser(request, response) {
+    const transaction = new Transactions();
+    transaction.user = request.user;
+
+    transaction
+      .findByUser()
+      .then((transactions) => {
+        response.json(transactions);
+      })
+      .catch((error) => {
+        response.status(error.code).json(error);
+      });
+  }
 }
