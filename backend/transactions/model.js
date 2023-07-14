@@ -1,19 +1,27 @@
+import { UserNotInformedError } from "../errors/user-note-informed.error.js";
 import { TransactionRepository } from "./repository.js";
 
-export class Transactions {
+export class Transaction {
+
+  date;
+  transctionType;
+  money;
+  description;
+  type;
+  user;
+
   #repository;
 
-  constructor() {
-    this.#repository = new TransactionRepository();
+  constructor(transactionRepository) {
+    this.#repository = transactionRepository || new TransactionRepository();
   }
 
   findByUser() {
     if (!this.user?.uid) {
-      return Promise.reject({
-        code: 500,
-        message: "Usuário não encontrado",
-      });
+      return Promise.reject(new UserNotInformedError());
     }
     return this.#repository.findByUserUid(this.user.uid);
   }
+
+  
 }

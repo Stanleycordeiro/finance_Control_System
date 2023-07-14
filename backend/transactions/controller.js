@@ -1,8 +1,8 @@
-import { Transactions } from "./model.js";
+import { Transaction } from "./model.js";
 
 export class TransactionController {
   findByUser(request, response) {
-    const transaction = new Transactions();
+    const transaction = new Transaction();
     transaction.user = request.user;
 
     transaction
