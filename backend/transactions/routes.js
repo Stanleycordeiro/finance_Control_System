@@ -1,4 +1,5 @@
-import  express  from "express";
+import express, { request, response } from "express";
+import admin from "firebase-admin";
 import { TransactionController } from "./controller.js";
 import { authenticateToken } from "../middlewares/authenticate-jwt.js";
 
@@ -6,6 +7,11 @@ const app = express();
 
 const transactionController = new TransactionController();
 
-app.get("/", authenticateToken, transactionController.findByUser);
+app.get(
+  "/",
+  (request, response, next) =>
+    authenticateToken(request, response, next, admin.auth()),
+  (request, response) => transactionController.findByUser(request, response)
+);
 
 export const transactionsRouter = app;
