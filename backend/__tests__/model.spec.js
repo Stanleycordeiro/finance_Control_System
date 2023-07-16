@@ -2,6 +2,7 @@ import { Transaction } from "../transactions/model";
 import { UserNotInformedError } from "../errors/user-note-informed.error.js";
 import { TransactionUidNotInformedError } from "../errors/transaction-uid-not-informed.error.js";
 import { TransactionNotFoundError } from "../errors/transaction-not-not-found.error.js";
+import { UserDoenstOwnTransaction } from "../errors/user-doenst-own-transaction.error.js";
 
 describe("transaction model", () => {
   const transactionRepositoryMock = {
@@ -42,10 +43,26 @@ describe("transaction model", () => {
         findByUid: () => Promise.resolve(createTransaction()),
       });
       model.uid = 1;
+      model.user = { uid: "anyUserUid" };
 
       await model.findByUid();
 
       expect(model).toEqual(createTransaction());
+    });
+
+    test("When user doenst own transaction, then return 403 error", async () => {
+      const transactionDb = createTransaction();
+      transactionDb.user = { uid: "anyOtherUserUid" };
+
+      const model = new Transaction({
+        findByUid: () => Promise.resolve(transactionDb),
+      });
+      model.uid = 9;
+      model.user = { uid: "anyUserUid" };
+
+      await expect(model.findByUid()).rejects.toBeInstanceOf(
+        UserDoenstOwnTransaction
+      );
     });
 
     test("When uid not present, then return error 500", async () => {
