@@ -83,19 +83,59 @@ describe("transaction model", () => {
         TransactionNotFoundError
       );
     });
-
-    function createTransaction() {
-      const transaction = new Transaction();
-      transaction.uid = 1;
-      transaction.date = "anyDate";
-      transaction.transactionType = "Renda extra";
-      transaction.money = 10;
-      transaction.description = "anyDescription";
-      transaction.type = "income";
-      transaction.user = {
-        uid: "anyUserUid",
-      };
-      return transaction;
-    }
   });
+
+  describe("given create new transaction", () => {
+    const params = {
+      date: "anyDate",
+      transactionType: "Renda extra",
+      money: 10,
+      description: "anyDescription",
+      type: "income",
+      user: {
+        uid: "anyUserUid",
+      },
+    };
+
+    test("then return new transaction", async () => {
+      const model = new Transaction(repostoryMock);
+
+      await model.create(params);
+
+      const newTransaction = createTransaction();
+
+      expect(model).toEqual(newTransaction);
+    });
+
+    test("then save new transaction", async () => {
+   
+      const model = new Transaction(repostoryMock);
+
+      await model.create(params);
+
+      expect(repostoryMock._hasSaved).toBeTruthy();
+    });
+  });
+
+  const repostoryMock = {
+    _hasSaved: false,
+    save() {
+      this._hasSaved = true;
+      return Promise.resolve({ uid: 1 });
+    },
+  };
+
+  function createTransaction() {
+    const transaction = new Transaction();
+    transaction.uid = 1;
+    transaction.date = "anyDate";
+    transaction.transactionType = "Renda extra";
+    transaction.money = 10;
+    transaction.description = "anyDescription";
+    transaction.type = "income";
+    transaction.user = {
+      uid: "anyUserUid",
+    };
+    return transaction;
+  }
 });
