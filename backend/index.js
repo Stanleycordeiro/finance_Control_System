@@ -8,6 +8,8 @@ admin.initializeApp({
   credential: admin.credential.cert("serviceAcountKey.json"),
 });
 
+app.use(express.json());
+
 app.use("/transactions", transactionsRouter);
 
 app.listen(3000, () => console.log("API iniciada no localhost:3000"));
