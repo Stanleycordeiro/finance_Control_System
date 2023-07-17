@@ -118,7 +118,7 @@ function createPValueTransactionListItem(transaction) {
 }
 function createPTransactionTypeListItem(transaction) {
   const pTransactionType = document.createElement("p");
-  pTransactionType.innerHTML = transaction.transctionType;
+  pTransactionType.innerHTML = transaction.transactionType;
   return pTransactionType;
 }
 function createPDescriptionListItem(transaction) {
@@ -198,7 +198,7 @@ function fillTransactionScreen(transaction) {
   modifyForm.typeIncome().checked = transaction.type === "income";
   modifyForm.date().value = transaction.date;
   modifyForm.value().value = transaction.money;
-  modifyForm.typeTransactions().value = transaction.transctionType;
+  modifyForm.typeTransactions().value = transaction.transactionType;
   modifyForm.descriptionTransaction().value = transaction.description;
 }
 

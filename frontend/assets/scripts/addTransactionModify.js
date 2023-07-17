@@ -167,8 +167,8 @@ function showAddTransactionModify(uid, transaction) {
       return false;
     }
 
-    var transctionType = form.typeTransactions().value;
-    if (!transctionType) {
+    var transactionType = form.typeTransactions().value;
+    if (!transactionType) {
       return false;
     }
 

@@ -7,7 +7,7 @@ import { UserDoenstOwnTransaction } from "../errors/user-doenst-own-transaction.
 
 export class Transaction {
   date;
-  transctionType;
+  transactionType;
   money;
   description;
   type;

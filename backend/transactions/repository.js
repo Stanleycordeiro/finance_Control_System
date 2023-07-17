@@ -1,3 +1,4 @@
+import { json } from "express";
 import admin from "firebase-admin";
 
 export class TransactionRepository {
@@ -30,6 +31,6 @@ export class TransactionRepository {
       .firestore()
       .collection("transactions")
       .add(JSON.parse(JSON.stringify(transaction)))
-      .then(response => ({ uid: response.id }));
+      .then((response) => ({ uid: response.id }));
   }
 }

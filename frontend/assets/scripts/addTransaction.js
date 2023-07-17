@@ -163,8 +163,8 @@ function showAddTransaction() {
       return false;
     }
 
-    var transctionType = form.typeTransactions().value;
-    if (!transctionType) {
+    var transactionType = form.typeTransactions().value;
+    if (!transactionType) {
       return false;
     }
 
@@ -195,7 +195,7 @@ function showAddTransaction() {
       type: form.typeExpense().checked ? "expense" : "income",
       date: form.date().value,
       money: parseFloat(form.value().value),
-      transctionType: form.typeTransactions().value,
+      transactionType: form.typeTransactions().value,
       description: form.descriptionTransaction().value,
       user: {
         uid: firebase.auth().currentUser.uid,
